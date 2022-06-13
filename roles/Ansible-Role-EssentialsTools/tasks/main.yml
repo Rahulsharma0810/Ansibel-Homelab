@@ -1,0 +1,12 @@
+---
+- name: UPGRADE ALL PACKAGES
+  apt:
+    name: '*'
+    state: latest
+
+- block:
+  - name: INSTALL TOOLS
+    apt: state=latest name={{ item }}
+    with_items:
+      - "{{ Tools }}"
+    become: true

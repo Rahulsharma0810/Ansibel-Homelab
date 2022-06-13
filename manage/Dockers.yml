@@ -1,0 +1,8 @@
+- name: Deploying Docker
+  hosts: docker
+  roles:
+    - { role: geerlingguy.docker, tags: Docker }
+    - { role: Ansible-Role-Auth-Users, tags: Ansible-Role-Auth-Users }
+  tasks:
+    - debug:
+        msg: "vars {{ authorized_users }}"

@@ -1,0 +1,12 @@
+---
+Tools:
+  - net-tools
+  - nano
+  - vim
+  - unzip
+  - wget
+  - curl
+  - rsync
+  - htop
+  - tree
+  - screen

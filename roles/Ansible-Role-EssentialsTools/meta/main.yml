@@ -1,0 +1,24 @@
+galaxy_info:
+  author: Rahul Vinod Sharma
+  description: Role to install basic packages in Centos 7
+  license: GPLv2
+
+  min_ansible_version: 1.9
+
+  platforms:
+  - name: EL
+    versions:
+    - 7
+
+  galaxy_tags:
+    - net-tools
+    - nano
+    - vim
+    - unzip
+    - wget
+    - tree
+    - htop
+    - curl
+    - rsync
+    - screen
+dependencies: []

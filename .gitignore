@@ -1,0 +1,6 @@
+/roles/geerlingguy.docker
+/roles/geerlingguy.kubernetes
+/roles/geerlingguy.ntp
+/roles/geerlingguy.swap
+/roles/robertdebock.locale
+/roles/ruzickap.vmwaretools

@@ -1,0 +1,29 @@
+---
+- name: private_keys - ensure directory exists.
+  file:
+    dest: "{{ item.key_file | dirname }}"
+    mode: 0700
+    owner: "{{ item.user }}"
+    state: directory
+  no_log: True
+  with_items: "{{ authorized_private_keys }}"
+  debugger: on_failed
+
+- name: private_keys - setup private keys
+  copy:
+    content: "{{ item.key_content }}"
+    dest: "{{ item.key_file }}"
+    mode: 0600
+    owner: "{{ item.user }}"
+  no_log: True
+  with_items: "{{ authorized_private_keys }}"
+
+- name: private_keys - symlinks
+  file:
+    src: "{{ item.key_file }}"
+    dest: "{{ item.symlink }}"
+    owner: "{{ item.user }}"
+    state: link
+  no_log: True
+  when: item.symlink is defined
+  with_items: "{{ authorized_private_keys }}"

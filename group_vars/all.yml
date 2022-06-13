@@ -1,0 +1,163 @@
+---
+# file: group_vars/all
+# <!--=================================
+# =            Locale Role            =
+# ==================================-->
+locale_lang: en_US.UTF-8
+locale_language: "{{ locale_lang }}"
+locale_lc_address: "{{ locale_lang }}"
+locale_lc_all: "{{ locale_lang }}"
+locale_lc_collate: "{{ locale_lang }}"
+locale_lc_ctype: "{{ locale_lang }}"
+locale_lc_identification: "{{ locale_lang }}"
+locale_lc_measurement: "{{ locale_lang }}"
+locale_lc_messages: "{{ locale_lang }}"
+locale_lc_monetary: "{{ locale_lang }}"
+locale_lc_name: "{{ locale_lang }}"
+locale_lc_numeric: "{{ locale_lang }}"
+locale_lc_paper: "{{ locale_lang }}"
+locale_lc_response: "{{ locale_lang }}"
+locale_lc_telephone: "{{ locale_lang }}"
+locale_lc_time: "{{ locale_lang }}"
+
+locale_timezone: Asia/Kolkata
+
+# <!--====  End of Locale Role  ====-->
+
+#███████╗███████╗███████╗███████╗███╗   ██╗████████╗██╗ █████╗ ██╗     ███████╗    ████████╗ ██████╗  ██████╗ ██╗     ███████╗
+#██╔════╝██╔════╝██╔════╝██╔════╝████╗  ██║╚══██╔══╝██║██╔══██╗██║     ██╔════╝    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     ██╔════╝
+#█████╗  ███████╗███████╗█████╗  ██╔██╗ ██║   ██║   ██║███████║██║     ███████╗       ██║   ██║   ██║██║   ██║██║     ███████╗
+#██╔══╝  ╚════██║╚════██║██╔══╝  ██║╚██╗██║   ██║   ██║██╔══██║██║     ╚════██║       ██║   ██║   ██║██║   ██║██║     ╚════██║
+#███████╗███████║███████║███████╗██║ ╚████║   ██║   ██║██║  ██║███████╗███████║       ██║   ╚██████╔╝╚██████╔╝███████╗███████║
+#╚══════╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
+
+Tools:
+  - net-tools
+  - nano
+  - vim
+  - unzip
+  - wget
+  - curl
+  - rsync
+  - htop
+  - tree
+  - git
+  - screen
+
+# <!--==============================
+# =            NTP Role            =
+# ===============================-->
+ntp_enabled: true
+ntp_timezone: Asia/Kolkata
+
+ntp_manage_config: false
+
+# NTP server area configuration (leave empty for 'Worldwide').
+# See: http://support.ntp.org/bin/view/Servers/NTPPoolServers
+ntp_area: "asia"
+ntp_servers:
+  - "server 0.{{ ntp_area }}.pool.ntp.org"
+  - "server 1.{{ ntp_area }}.pool.ntp.org"
+  - "server 2.{{ ntp_area }}.pool.ntp.org"
+  - "server 3.{{ ntp_area }}.pool.ntp.org"
+
+ntp_restrict:
+  - "127.0.0.1"
+  - "::1"
+# <!--====  End of NTP Role  ====-->
+
+# <!--==============================
+# =            Vmwaretools          =
+# ===============================-->
+# defaults file for vmwaretools
+
+#   The version of VMware Tools to install. Possible values can be found here:
+#   http://packages.vmware.com/tools/esx/index.html
+vmwaretools_tools_version: latest
+
+#   The server which holds the YUM repository. Customize this if you mirror
+#   public YUM repos to your internal network.
+vmwaretools_yum_server: https://packages.vmware.com
+
+#   The path on *yum_server* where the repository can be found. Customize
+#   this if you mirror public YUM repos to your internal network.
+vmwaretools_yum_path: /tools
+
+#   Repository package version
+#   For example: 9.4.10-1 version for http://packages.vmware.com/tools/esx/latest/repos/vmware-tools-repo-RHEL6-9.4.10-1.el6.x86_64.rpm
+#   If it is not specified it's autodetected by "Get repository package version if vmwaretools_repo_version is undefined." task.
+#vmwaretools_repo_version: 8.6.16-1
+# <!--====  End of Vmwaretools====-->
+
+# <!--===============================
+# =          Docker Role           =
+# ================================-->
+# Edition can be one of: 'ce' (Community Edition) or 'ee' (Enterprise Edition).
+docker_edition: "ce"
+docker_package: "docker-{{ docker_edition }}"
+docker_package_state: present
+
+# Docker Compose options.
+docker_install_compose: true
+docker_compose_version: "1.25.4"
+docker_compose_path: /usr/local/bin/docker-compose
+
+# Used only for Debian/Ubuntu. Switch 'stable' to 'edge' if needed.
+docker_apt_release_channel: stable
+docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+
+# Used only for RedHat/CentOS.
+docker_yum_repo_url: https://download.docker.com/linux/centos/docker-{{ docker_edition }}.repo
+docker_yum_repo_enable_edge: 0
+docker_yum_repo_enable_test: 0
+
+# <!--====  End of Docker====-->
+
+# <!--====================================
+# =            Role zsh            =
+# =====================================-->
+
+zsh_users:
+  - rvs
+zsh_ohmy_theme: "powerlevel10k/powerlevel10k"
+zsh_ohmy_custom_plugins:
+  - name: zsh-syntax-highlighting
+    repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+  - name: zsh-autosuggestions
+    repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
+
+zsh_ohmy_plugins:
+  - git
+  - gcloud
+  - docker
+  - zsh-syntax-highlighting
+  - zsh-autosuggestions
+  - sudo
+  - z
+zsh_ohmy_auto_update: true
+
+# <!--====  End of Role zsh  ====-->
+#
+#███████╗██╗    ██╗ █████╗ ██████╗
+#██╔════╝██║    ██║██╔══██╗██╔══██╗
+#███████╗██║ █╗ ██║███████║██████╔╝
+#╚════██║██║███╗██║██╔══██║██╔═══╝
+#███████║╚███╔███╔╝██║  ██║██║
+#╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝
+# Swap configuration.
+swap_file_state: absent
+swap_file_path: /swap.img
+
+#██╗  ██╗ █████╗ ███████╗
+#██║ ██╔╝██╔══██╗██╔════╝
+#█████╔╝ ╚█████╔╝███████╗
+#██╔═██╗ ██╔══██╗╚════██║
+#██║  ██╗╚█████╔╝███████║
+#╚═╝  ╚═╝ ╚════╝ ╚══════╝
+
+kubernetes_allow_pods_on_master: false
+kubernetes_enable_web_ui: true
+
+kubectl_users:
+  - user: "{{ ansible_ssh_user }}"
+  - user: "rvs"

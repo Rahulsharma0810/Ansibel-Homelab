@@ -1,0 +1,8 @@
+authorized_users: []
+  # - { user: username, authorized_keys: ['public_key_content'] }
+
+authorized_sudoers: []
+  # - username
+
+authorized_private_keys: []
+  # - { user: username, key_file: '/home/username/id_rsa', key_content: ""}

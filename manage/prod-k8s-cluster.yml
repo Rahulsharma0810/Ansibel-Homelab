@@ -1,0 +1,6 @@
+- name: Deploying Kubernetes
+  hosts: prod-k8s-cluster
+  roles:
+    - { role: geerlingguy.docker, tags: Docker }
+    - { role: geerlingguy.swap, tags: Swap }
+    - { role: geerlingguy.kubernetes, tags: Kubernetes }

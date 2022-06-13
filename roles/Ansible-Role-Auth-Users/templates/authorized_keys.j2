@@ -1,0 +1,5 @@
+# {{ ansible_managed }}
+
+{% for key in item.authorized_keys | default([]) %}
+{{ key }}
+{% endfor %}

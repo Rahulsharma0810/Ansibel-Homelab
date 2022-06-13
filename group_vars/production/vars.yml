@@ -1,0 +1,10 @@
+---
+# <!--=======================================
+# =            SSH Authorized Key            =
+# ========================================-->
+# ssh_root_id_rsa: in vault.yml
+authorized_users:
+  - user: "{{ ansible_ssh_user }}"
+    authorized_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJazWC4Z6ViCE0CWodiZ/rb3OdavTkMmhB5AuOuFiiA9aynyiVCSQQq/jTTJu1uuRnsT59wuVk/DYmgtjj+1Jd//5+FmaSqlexUNfQ2YcOBUxqlhd1YxGTK1B5rTlxyYfLMw9Z8H/38qvWotqaKGCDm1+2WKCqIhrHJL7R5ippuL4015LoneE+YR30XIxXEFNLjZYc3XELDi/MRaLGaujO7UrmZpuarjcweGSSpRjJYQyBRxNtcqaXcAFTP8hVZ8+rRMIyftu7eBMN2I76b/8laaqVtzTfpNcjG+mRssu5OQsy+qaxAu60J8MZoh+sCmIycd0nTA3g3aggpKyr7yJN root"
+# <!--====  End of SSH Authorized Key  ====-->

@@ -1,0 +1,62 @@
+---
+- name: create authorized users
+  user:
+    name: "{{ item.user }}"
+    state: present
+  # no_log: True
+  with_items: "{{ authorized_users }}"
+
+- name: ensure /root/.ssh or home/:user/.ssh directories exist
+  file:
+    group: "{{ item.user }}"
+    owner: "{{ item.user }}"
+    mode: 0700
+    # path: "{{ '/' if item.user == 'root' else '/home' }}/{{ item.user }}/.ssh"
+    path: "{{ '/' if item.user == 'root' else '/home' }}/{{ item.user }}/.ssh"
+    state: directory
+  # no_log: True
+  with_items: "{{ authorized_users }}"
+
+- name: setup authorized keys
+  template:
+    dest: "{{ '/' if item.user == 'root' else '/home' }}/{{ item.user }}/.ssh/authorized_keys"
+    group: "{{ item.user }}"
+    mode: 0600
+    owner: "{{ item.user }}"
+    src: authorized_keys.j2
+  # no_log: True
+  with_items: "{{ authorized_users }}"
+
+- name: copy extra files
+  copy:
+    src: "{{ item.file.src }}"
+    dest: "{{ item.file.dest }}"
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+    mode: "{{ item.file.mode }}"
+  when: item.file is defined and item.file.src != ''
+  # no_log: True
+  with_items: "{{ authorized_users }}"
+
+- name: Make sure we have a 'wheel' group
+  group:
+    name: wheel
+    state: present
+
+- name: Allow 'wheel' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    validate: visudo -cf %s
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+  ignore_errors: yes
+# Gave : "module_stdout": "sudo: a password is required\r\n", "msg": "MODULE FAILURE",
+
+- name: Add sudoers users to wheel group
+  user:
+    name: "{{ item }}"
+    groups: wheel
+    append: yes
+  with_items: "{{ authorized_sudoers }}"
+  ignore_errors: yes

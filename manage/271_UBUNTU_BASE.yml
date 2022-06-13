@@ -1,0 +1,12 @@
+- name: Deploying UBUNTU BASE
+  hosts: C271-UBUNTU-BASE-SERVER
+  vars_files:
+    - ../group_vars/all.yml
+  roles:
+    - { role: Ansible-Role-Auth-Users, tags: Auth }
+    - {
+        role: Ansible-Role-Vmwaretools,
+        tags: Vmwaretools,
+        when: ansible_virtualization_type == 'VMware',
+      }
+    - { role: Ansible-Role-ZSH, tags: Zsh }

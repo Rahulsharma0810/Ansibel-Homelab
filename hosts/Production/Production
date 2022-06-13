@@ -1,0 +1,35 @@
+[production]
+; Node 01
+C271-KUBE-MASTER-1 ansible_host=192.168.0.13 ansible_ssh_port=22 ansible_ssh_user=root
+C271-KUBE-NODE-0-01 ansible_host=192.168.0.14 ansible_ssh_port=22 ansible_ssh_user=root
+C271-KUBE-NODE-0-02 ansible_host=192.168.0.15 ansible_ssh_port=22 ansible_ssh_user=root
+; Node 02
+C271-KUBE-NODE-1-01 ansible_host=192.168.0.16 ansible_ssh_port=22 ansible_ssh_user=root
+C271-KUBE-NODE-1-02 ansible_host=192.168.0.17 ansible_ssh_port=22 ansible_ssh_user=root
+
+[docker]
+C271-KUBE-MASTER-1
+C271-KUBE-NODE-0-01
+C271-KUBE-NODE-0-02
+C271-KUBE-NODE-1-01
+C271-KUBE-NODE-1-02
+
+[prod-k8s-MASTER]
+C271-KUBE-MASTER-1
+
+[prod-k8s-NODES]
+C271-KUBE-NODE-0-01
+C271-KUBE-NODE-0-02
+C271-KUBE-NODE-1-01
+C271-KUBE-NODE-1-02
+
+[prod-k8s-MASTER:vars]
+kubernetes_role="master"
+kubernetes_enable_web_ui=True
+
+[prod-k8s-NODES:vars]
+kubernetes_role="node"
+
+[prod-k8s-cluster:children]
+prod-k8s-MASTER
+prod-k8s-NODES

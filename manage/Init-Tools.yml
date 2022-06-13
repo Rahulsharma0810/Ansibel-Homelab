@@ -1,0 +1,14 @@
+- name: Deploying Essentials Tools
+  hosts: all
+  vars_files:
+    - ../group_vars/all.yml
+  tasks:
+    - name: "update hostnames"
+      hostname:
+        name: "{{ inventory_hostname }}"
+  roles:
+    # - { role: geerlingguy.ntp, tags: ntp }
+    # - { role: robertdebock.locale, tags: Locale }
+    # - { role: Ansible-Role-EssentialsTools, tags: essentialstools }
+    - { role: Ansible-Role-Auth-Users, tags: auth-users }
+    # - { role: Ansible-Role-ZSH, tags: zsh }

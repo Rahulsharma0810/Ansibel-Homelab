@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+{% for config in item.ssh_configs %}
+{% if config.Host != '' %}
+Host {{ config.Host | default('') }}
+	HostName {{ config.HostName | default('')}}
+	User {{ config.User | default('') }}
+	Preferredauthentications {{ config.Preferredauthentications | default('publickey')}}
+	IdentityFile {{ config.IdentityFile | default('')}}
+	IdentitiesOnly yes
+{% endif %}
+{% endfor %}
