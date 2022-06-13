@@ -1,3 +1,3 @@
 # HomeLab Setup
 
-I run a homelab, currently build on vmware esxi with Kubernetes installed.
+Ansible repo to build a homelab with kubernetes, Docker and other essential tools on top of Ubuntu.
